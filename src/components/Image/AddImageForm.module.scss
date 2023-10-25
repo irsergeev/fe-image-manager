@@ -1,0 +1,52 @@
+@import "../../theme/colors.scss";
+
+.popup-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .4);
+
+    .add-picture-container{
+        padding: 20px 40px;
+        align-items: center;
+        background: $white;
+
+        .input-item{
+
+            input{
+                margin: 5px 0 15px 0;
+                width: 100%;
+            }
+        }
+
+        .actions{
+            margin-top: 15px;
+            .accept{
+                border: 1px solid $green;
+                background: $green;
+                color:$white;
+                padding: 5px 25px;
+                margin-right: 5px;
+
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+
+            .cancel{
+                border:none;
+                background: $white;
+                color: $grey;
+                padding: 10px 5px;
+
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

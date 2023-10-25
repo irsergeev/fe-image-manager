@@ -1,0 +1,15 @@
+@import "../theme/colors.scss";
+
+.content-panel-container{
+    height: 90%;
+    background-color: $white;
+    width: 10%;
+    flex: 1 0 auto;
+    margin: 0 40px;
+
+    .image{
+        object-fit: fill;
+        width: 100%;
+        height: 100%;
+    }
+}
