@@ -1,8 +1,4 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
-import './App.scss';
-import { ButtonText } from './ui/ButtonText';
-import { ButtonTypeEnum } from './types/enum';
 import { ImageModel } from './types/types';
 import { ImagePanel } from './components/ImagePanel';
 import { ContentPanel } from './components/ConentPanel';

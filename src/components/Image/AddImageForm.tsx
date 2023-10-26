@@ -64,30 +64,30 @@ export const AddImageForm : React.FC<Props> = ({isActive, stateHandler, newImage
     }
 
     return isActive ? 
-        (<div className={css['popup-container']} style={{ width: clientWidth, height: clientHeight }}>
+        (<div className={css.container} style={{ width: clientWidth, height: clientHeight }}>
             <form onSubmit={onSubmitForm}>
-                <div className={css['add-picture-container']}>
-                    <div className={css['input-item']}>
-                        <div className={css['field-title']}>
+                <div className={css['image-container']}>
+                    <div className={css.item}>
+                        <div className={css.title}>
                             <span>Title</span>
                         </div>
                         <input name='title'/>
                     </div>
-                    <div className={css['input-item']}>
-                        <div className={css['field-title']}>
+                    <div className={css.item}>
+                        <div className={css.title}>
                             <span>Description</span>
                         </div>
                         <input name='description'/>
                     </div>
-                    <div className={css['input-item']}>
-                        <div className={css['field-title']}>
+                    <div className={css.item}>
+                        <div className={css.title}>
                             <span>Image</span>
                         </div>
                         <input type='file' name='file' onChange={onFileChange}/>
                     </div>
                     <div className={css.actions}>
                         <button className={css.accept} type="submit">Add</button>
-                        <button className={css.cancel} onClick={_ => stateHandler(false)}>Cancel</button>
+                        <button className={css.cancel} type="reset" onClick={_ => stateHandler(false)}>Cancel</button>
                     </div>
                 </div>
             </form>

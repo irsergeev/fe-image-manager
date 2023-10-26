@@ -1,9 +1,11 @@
-.left-container{
+@import "../theme/colors.scss";
+
+.container{
     width: 450px;
     display: flex;
     flex-direction: column;
     height: 90%;
-    background-color: #fff;
+    background-color: $white;
     border-radius: 15px 15px 0 0;
     flex: 0 1 auto;
     
@@ -11,7 +13,7 @@
         font-weight: bold;
         padding: 10px 10px 20px 15px;
         flex: 0 1 auto;
-        color: #043669;
+        color: $main;
     }
 
     .content{
@@ -36,15 +38,15 @@
         .add-button{
             width: 100%;
             height: 40px;
-            color : #043669;
-            background-color: #fff;
-            border: 2px solid #043669;
+            color : $main;
+            background-color: $white;
+            border: 2px solid $main;
             font-weight: bold;
 
             &:hover{
-                color: #fff;
+                color: $white;
                 font-weight: bold;
-                background-color: #043669;
+                background-color: $main;
                 transition: 0.4s;
                 cursor: pointer;
             }

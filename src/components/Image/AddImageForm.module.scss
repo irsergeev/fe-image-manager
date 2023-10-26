@@ -1,6 +1,6 @@
 @import "../../theme/colors.scss";
 
-.popup-container{
+.container{
     position: fixed;
     top: 0;
     left: 0;
@@ -10,12 +10,12 @@
     justify-content: center;
     background: rgba(0, 0, 0, .4);
 
-    .add-picture-container{
+    .image-container{
         padding: 20px 40px;
         align-items: center;
         background: $white;
 
-        .input-item{
+        .item{
 
             input{
                 margin: 5px 0 15px 0;

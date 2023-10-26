@@ -49,7 +49,7 @@ export const  ImageItem : React.FC<Props> = ({ image, action, deleteHandler }) =
     async function onDeleteClick() { deleteHandler(image.id!); }
     
     return editMode ? 
-    (<div className={css['picture-item-container']} onClick={pictureItemClickHandler}>
+    (<div className={css.container} onClick={pictureItemClickHandler}>
         <div className={css.title}>
             <input className={css['title-input']} defaultValue={titleValue} onChange={e => setChangeTitle(e.target.value)}/>
         </div>
@@ -62,7 +62,7 @@ export const  ImageItem : React.FC<Props> = ({ image, action, deleteHandler }) =
         </div>
     </div>)
     :
-    (<div className={css['picture-item-container']} onClick={pictureItemClickHandler}>
+    (<div className={css.container} onClick={pictureItemClickHandler}>
         <div className={css.title}>
             <span>{titleValue}</span>
             <span className={css.createdAt}>{getDateString(image.createAt)}</span>

@@ -11,7 +11,7 @@ interface Props
     imageData? : string
 }
 
-export const ContentPanel : React.FC<Props> = ({imageId, imageData}) => {
+export const ContentPanel : React.FC<Props> = ({ imageId, imageData }) => {
     const [data, setData] = useState<CommentModelUI[]>();
 
     useEffect(() => 
@@ -75,7 +75,6 @@ export const ContentPanel : React.FC<Props> = ({imageId, imageData}) => {
 
                 break;
             case ActionTypeEnum.Delete:
-                console.log('delete exist item', model);
                 await DeleteCommentAsync(model.comment.id!);
                 
                 var newComments = data?.filter(c => c.comment.id !== model.comment.id);
@@ -100,7 +99,7 @@ export const ContentPanel : React.FC<Props> = ({imageId, imageData}) => {
     }
 
     return (
-        <div className={css['content-panel-container']} onClick={onAddComment}>
+        <div className={css.container} onClick={onAddComment}>
         {(imageData ? (<img className={css.image} src={imageData} alt="some text"/>) : <></>)}
             {data?.map((comment, index) => (
                 <Comment key={index} model={comment} actionHandler={actionHandler}/>

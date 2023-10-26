@@ -1,4 +1,4 @@
-export const getDateString = (date: Date) => {
+export const getDateString = (date?: Date) => {
     if (!date) {
         return '';
     }

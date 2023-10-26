@@ -13,7 +13,7 @@ interface Props
 export const ImagePanel : React.FC<Props> = ({selectedImageHandler}) => {
 
     const [images, setImages] = useState<ImageModel[]>();
-    const [addPicturePopupState, setAddPicturePopupState] = useState(false);
+    const [addFormState, setAddFormState] = useState(false);
 
     function onAddImage(image: ImageModel)
     {
@@ -45,7 +45,7 @@ export const ImagePanel : React.FC<Props> = ({selectedImageHandler}) => {
     }, []);
 
     return(
-    <div className={css['left-container']}>
+    <div className={css.container}>
         <div className={css.header}>
             <span>Список файлов</span>
         </div>
@@ -60,13 +60,13 @@ export const ImagePanel : React.FC<Props> = ({selectedImageHandler}) => {
                 )}
             </div>
         </div>
-        <div className={css['action']}>
-            <button className={css['add-button']} onClick={_ => setAddPicturePopupState(true)}>+ Добавить изображение</button>
+        <div className={css.action}>
+            <button className={css['add-button']} onClick={_ => setAddFormState(true)}>+ Добавить изображение</button>
         </div>
 
         <AddImageForm 
-            isActive={addPicturePopupState} 
-            stateHandler={setAddPicturePopupState} 
+            isActive={addFormState} 
+            stateHandler={setAddFormState} 
             newImageHandler={onAddImage} />
     </div>)
 };
