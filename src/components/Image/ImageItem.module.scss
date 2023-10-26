@@ -1,0 +1,65 @@
+@import "../../theme/colors.scss";
+
+.container{
+    padding: 10px 15px;
+    border-bottom: 1px solid $light-grey;
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid $white;
+
+    &:hover{
+        border-left: 3px solid $main;
+        transition: 0.4s;
+        background: $light-grey;
+        cursor: pointer;
+
+        .title, .description{
+            @extend .hover-style;
+            border-bottom: 1px solid $light-grey;
+        }
+
+        button{
+            @extend .hover-style;
+        }
+    }
+
+    .title{
+        font-size: 14px;
+        font-weight: bold;
+        outline: none;
+        border:none;
+        border-bottom: 1px solid $white;
+        background: $white;
+
+        .createdAt{
+            color: $grey;
+            font-size: 12px;
+            padding-left: 10px;
+        }
+
+        .title-input{
+            width: 100%;
+        }
+    }
+
+    .description{
+        font-size: 13px;
+        outline: none;
+        border:none;
+        border-bottom: 1px solid $white;
+        background: $white;
+        
+        .description-input{
+            width: 100%;
+        }
+    }
+
+    .actions{
+        margin-top: 10px;
+    }
+}
+
+.hover-style{
+    background: $light-grey;
+    transition: 0.4s;
+}

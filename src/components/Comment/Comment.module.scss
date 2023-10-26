@@ -1,0 +1,67 @@
+@import "../../theme/colors.scss";
+
+.comment-container{
+    padding: 10px;
+    background: $white;
+    box-shadow: 0 0 10px 1px;
+
+    .comment-content{
+        max-width: 200px;
+        line-height: 0.8;
+        font-size: 13px;
+        margin:20px 0;
+    }
+
+    .min-size-container{
+        display: flex;
+
+        .min-size-icon{
+            padding: 4px;
+            border: 1px solid;
+            border-radius: 50%;
+            height: 16px;
+    
+            &:hover { cursor: pointer; }
+        }
+    }
+
+    .actions{
+        font-size: 13px;
+
+        .save-button{
+            color: $green;
+        }
+
+        .cancel-button{
+            color: $grey;
+        }
+
+        .edit-button{
+            color: $grey;
+        }
+
+        .delete-button{
+            color: $red;
+        }
+        
+        .text-button{
+            border: none;
+            background: $white;
+            padding: 0;
+            margin-right: 10px;
+            font-size: 13px;
+
+            &:hover{ cursor: pointer; }
+        }
+    }
+}
+
+.comment-as-icon{
+    border-radius: 50%;
+    background: $white;
+    padding: 5px;
+    height: 32px;
+    box-shadow: 0 0 10px 1px;
+
+    &:hover { cursor: pointer; }
+}

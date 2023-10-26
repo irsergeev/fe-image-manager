@@ -1,0 +1,30 @@
+@import "../theme/colors.scss";
+
+.cancel-button{
+    @extend .common-text-button-style;
+    color:$grey;
+}
+
+.edit-button{
+    @extend .common-text-button-style;
+    color:$grey;
+}
+
+.save-button{
+    @extend .common-text-button-style;
+    color:$green;
+}
+
+.delete-button{
+    @extend .common-text-button-style;
+    color: $red;
+}
+
+.common-text-button-style{
+    border: none;
+    padding-left: 0;
+    background: $white;
+    margin-right: 5px;
+
+    &:hover{ cursor: pointer; }
+}
