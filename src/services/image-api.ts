@@ -10,7 +10,7 @@ export const GetImagesAsync = async () : Promise<ImageModel[] | void> =>
     return data;
 }
 
-export const UpdatePicutreAsync = async (id : number, title : string, description : string) =>
+export const UpdateImageAsync = async (id : number, title : string, description : string) =>
 {
     var updateModel = { id, title, description }
 
@@ -35,9 +35,9 @@ export const GetCommentAsync = async (imageId: number) : Promise<CommentModel[]>
     return data;
 }
 
-export const AddCommentToImageAsync = async (imageId: number, commentText : string, x: number, y: number) : Promise<number> =>
+export const AddCommentToImageAsync = async (imageId: number, commentText : string, x: number, y: number, createdAt: Date) : Promise<number> =>
 {
-    const newComment = { imageId: imageId, text: commentText, positionX: x, positionY: y };
+    const newComment = { imageId: imageId, text: commentText, positionX: x, positionY: y, createdAt:  createdAt};
 
     var response = await api.post('/api/Image/Comment', newComment)
         .then(response => { return response.data })
@@ -46,9 +46,11 @@ export const AddCommentToImageAsync = async (imageId: number, commentText : stri
     return response;
 }
 
-export const CreateImageAsync = async (title : string, description : string, fileName : string, fileDataAsString : string, createAt : Date) : Promise<number> => 
+export const CreateImageAsync = async (title : string, description : string, fileName : string, fileDataAsString : string, createdAt : Date) : Promise<number> => 
 {
-    const data = { title, description, fileName, fileDataAsString, createAt: createAt }
+    const data = { title, description, fileName, fileDataAsString, createdAt: createdAt }
+
+    console.log("create image: ", data);
 
     var result = await api.post('/api/Image', data)
         .then(response => { return response.data })
@@ -59,7 +61,8 @@ export const CreateImageAsync = async (title : string, description : string, fil
 
 export const UpdateCommentAsync = async (data: CommentModel) =>
 {
-    await api.post('/api/Image/Comment', data)
+    console.log("update comment async", data);
+    await api.put('/api/Image/Comment', data)
         .catch(error => console.log(error));
 }
 
