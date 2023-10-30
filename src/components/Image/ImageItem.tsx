@@ -1,10 +1,10 @@
 import css from './ImageItem.module.scss';
 import { useState } from 'react';
 import { ImageModel } from '../../types/types';
-import { UpdatePicutreAsync } from '../../services/image-api';
+import { UpdateImageAsync } from '../../services/image-api';
 import { ButtonText } from '../../ui/ButtonText';
 import { ButtonTypeEnum } from '../../types/enum';
-import { getDateString } from '../../services/helpers';
+import { utcToLocalString } from '../../services/helpers';
 
 export interface Props
 {
@@ -37,7 +37,7 @@ export const  ImageItem : React.FC<Props> = ({ image, action, deleteHandler }) =
     {
         if(titleValue !== changeTitle || descriptionValue !== changeDescription)
         {
-            await UpdatePicutreAsync(image.id!, changeTitle, changeDescription);
+            await UpdateImageAsync(image.id!, changeTitle, changeDescription);
         }
 
         setTitleValue(changeTitle);
@@ -65,7 +65,7 @@ export const  ImageItem : React.FC<Props> = ({ image, action, deleteHandler }) =
     (<div className={css.container} onClick={pictureItemClickHandler}>
         <div className={css.title}>
             <span>{titleValue}</span>
-            <span className={css.createdAt}>{getDateString(image.createAt)}</span>
+            <span className={css.createdAt}>{utcToLocalString(image.createdAt)}</span>
         </div>
         <div className={css.description}>
             <span>{descriptionValue}</span>

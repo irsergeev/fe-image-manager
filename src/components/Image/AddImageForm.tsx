@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getDateNow, getUTCDate } from '../../services/helpers';
 import { CreateImageAsync } from '../../services/image-api';
 import { ImageModel } from '../../types/types';
 import css from './AddImageForm.module.scss';
@@ -32,7 +33,7 @@ export const AddImageForm : React.FC<Props> = ({isActive, stateHandler, newImage
                 description: description!, 
                 fileName: fileName!, 
                 fileDataAsString: file!.toString(),
-                createAt: new Date(), 
+                createdAt: getDateNow(), 
             }
 
             var id = await CreateImageAsync(
@@ -40,8 +41,10 @@ export const AddImageForm : React.FC<Props> = ({isActive, stateHandler, newImage
                 newImage.description, 
                 newImage.fileName, 
                 newImage.fileDataAsString, 
-                newImage.createAt);
-
+                newImage.createdAt);
+            
+            newImage.createdAt = getUTCDate(newImage.createdAt);
+            
             newImageHandler({id: id, ...newImage});
 
             stateHandler(false);
@@ -77,13 +80,13 @@ export const AddImageForm : React.FC<Props> = ({isActive, stateHandler, newImage
                         <div className={css.title}>
                             <span>Description</span>
                         </div>
-                        <input name='description'/>
+                        <input name='description' required/>
                     </div>
                     <div className={css.item}>
                         <div className={css.title}>
                             <span>Image</span>
                         </div>
-                        <input type='file' name='file' onChange={onFileChange}/>
+                        <input type='file' name='file' onChange={onFileChange} required/>
                     </div>
                     <div className={css.actions}>
                         <button className={css.accept} type="submit">Add</button>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getDateNow, getUTCDate } from '../services/helpers';
 import { AddCommentToImageAsync, DeleteCommentAsync, GetCommentAsync, UpdateCommentAsync } from '../services/image-api';
 import { ActionTypeEnum } from '../types/enum';
 import { CommentModelUI } from '../types/types';
@@ -35,6 +36,8 @@ export const ContentPanel : React.FC<Props> = ({ imageId, imageData }) => {
                 } 
                 
                 setData(uiComments);
+            }else{
+                setData([]);
             }
         }
 
@@ -43,59 +46,78 @@ export const ContentPanel : React.FC<Props> = ({ imageId, imageData }) => {
 
     async function actionHandler(model: CommentModelUI, actionType: ActionTypeEnum)
     {
-        switch (actionType)
+        if(imageId)
         {
-            case ActionTypeEnum.Save:
-                if(model.comment.id)
-                {
-                    await UpdateCommentAsync(model.comment);
-                }
-                else
-                {
-                    const comment = model.comment;
+            switch (actionType)
+            {
+                case ActionTypeEnum.Save:
+                    if(model.comment.id)
+                    {
+                        await UpdateCommentAsync(model.comment);
+                    }
+                    else
+                    {
+                        const comment = model.comment;
 
-                    await AddCommentToImageAsync(
-                        comment.imageId, 
-                        comment.text, 
-                        comment.positionX, 
-                        comment.positionY);
-                }
+                        var newCommentId = await AddCommentToImageAsync(
+                            comment.imageId, 
+                            comment.text, 
+                            comment.positionX, 
+                            comment.positionY,
+                            comment.createdAt);
 
-                break;
-            case ActionTypeEnum.Cancel:
-                if(model.isNew) 
-                {
-                    const newComments = data?.filter(c => !c.isNew);
+                        model.isNew = false;
+                        model.isEditMode = false;
+                        model.isViewAsIcon = true;
+                        model.comment.id = newCommentId;
+                        model.comment.createdAt = getUTCDate(model.comment.createdAt);
+
+                        var comments = data?.filter(c => !c.isNew);
+
+                        const newComments = comments?.concat(model) ?? [model];
+                        setData(newComments);
+                    }
+
+                    break;
+                case ActionTypeEnum.Cancel:
+                    if(model.isNew) 
+                    {
+                        const newComments = data?.filter(c => !c.isNew);
+                        setData(newComments);
+                    }
+                    else
+                    {
+                        model.isEditMode = false;
+                    }
+
+                    break;
+                case ActionTypeEnum.Delete:
+                    await DeleteCommentAsync(model.comment.id!);
+
+                    var newComments = data?.filter(c => c.comment.id !== model.comment.id);
                     setData(newComments);
-                }
-                else
-                {
-                    model.isEditMode = false;
-                }
 
-                break;
-            case ActionTypeEnum.Delete:
-                await DeleteCommentAsync(model.comment.id!);
-                
-                var newComments = data?.filter(c => c.comment.id !== model.comment.id);
-                setData(newComments);
-
-                break;
+                    break;
+            }
         }
     }
 
-    function onAddComment(event : React.MouseEvent<HTMLDivElement>){        
-        const currentComments = data?.filter(c => !c.isNew);
+    function onAddComment(event : React.MouseEvent<HTMLDivElement>)
+    {
+        if(imageId)
+        {        
+            const currentComments = data?.filter(c => !c.isNew);
 
-        const newComment = {
-            comment: { imageId: imageId!, positionX: event.clientX, positionY: event.clientY, text: '' },
-            isNew: true,
-            isEditMode: true,
-            isViewAsIcon: false
+            const newComment = {
+                comment: { imageId: imageId!, positionX: event.clientX, positionY: event.clientY, text: '', createdAt: getDateNow() },
+                isNew: true,
+                isEditMode: true,
+                isViewAsIcon: false
+            }
+
+            const newComments = currentComments?.concat(newComment) ?? [newComment];
+            setData(newComments);
         }
-
-        const newComments = currentComments?.concat(newComment) ?? [newComment];
-        setData(newComments);
     }
 
     return (

@@ -5,6 +5,7 @@ export interface CommentModel
     text : string,
     positionX : number,
     positionY : number,
+    createdAt : Date,
 }
 
 export interface CommentModelUI
@@ -22,5 +23,5 @@ export interface ImageModel
     description : string,
     fileName : string,
     fileDataAsString? : string,
-    createAt : Date
+    createdAt : Date
 }

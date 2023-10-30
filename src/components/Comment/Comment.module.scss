@@ -7,13 +7,21 @@
 
     .comment-content{
         max-width: 200px;
-        line-height: 0.8;
+        line-height: 1.1;
         font-size: 13px;
         margin:20px 0;
     }
 
     .min-size-container{
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .createdAt{
+            color: $grey;
+            font-size: 13px;
+            padding-left: 10px;
+        }
 
         .min-size-icon{
             padding: 4px;

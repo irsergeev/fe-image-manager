@@ -5,6 +5,7 @@ import MinSizeIcon from '../../icons/min-size.svg';
 import { CommentModelUI } from '../../types/types';
 import { ActionTypeEnum, ButtonTypeEnum } from '../../types/enum';
 import { ButtonText } from '../../ui/ButtonText';
+import { getDateNow, utcToLocalString } from '../../services/helpers';
 
 interface Props
 {
@@ -15,7 +16,8 @@ interface Props
 interface CommentState
 {
     isEditMode : boolean,
-    isViewAsIcon : boolean
+    isViewAsIcon : boolean,
+    isNew : boolean,
 }
 
 export const Comment : React.FC<Props> = ({ model, actionHandler }) => {
@@ -31,21 +33,34 @@ export const Comment : React.FC<Props> = ({ model, actionHandler }) => {
         switch (action)
         {
             case ActionTypeEnum.Cancel:
-                updateState(false, false);
 
                 if(!model.comment.id)
+                {
+                    updateState(false, false, true);
                     actionHandler(model, action);
+                }
                 else
+                {
+                    updateState(false, false, false);
                     setCommentText(model.comment.text);
+                }
                 break;
             case ActionTypeEnum.Edit:
-                updateState(true, false);
+                updateState(true, false, false);
                 break;
             case ActionTypeEnum.Save:
                 model.comment.text = commentText;
 
-                updateState(false, true);
-                actionHandler(model, ActionTypeEnum.Save);
+                if(!model.comment.id)
+                {
+                    updateState(false, true, true);
+                    actionHandler(model, ActionTypeEnum.Save);
+                }
+                else
+                {
+                    updateState(false, true, false);
+                    actionHandler(model, ActionTypeEnum.Save);
+                }
                 break;
             case ActionTypeEnum.Delete:
                 actionHandler(model, ActionTypeEnum.Delete);
@@ -58,22 +73,24 @@ export const Comment : React.FC<Props> = ({ model, actionHandler }) => {
     async function onClickIcon(event: React.MouseEvent<HTMLImageElement>)
     {
         event.stopPropagation();
-        setCommentState({isEditMode: false, isViewAsIcon: false});
+        setCommentState({isEditMode: false, isViewAsIcon: false, isNew: false});
     }
 
-    function updateState(isEditMode: boolean, isViewAsIcon: boolean)
+    function updateState(isEditMode: boolean, isViewAsIcon: boolean, isNew: boolean)
     {
-        setCommentState({ isEditMode: isEditMode, isViewAsIcon: isViewAsIcon });
+        setCommentState({ isEditMode: isEditMode, isViewAsIcon: isViewAsIcon, isNew: isNew });
         model.isEditMode = isEditMode;
         model.isViewAsIcon = isViewAsIcon;
+        model.isNew = isNew
     }
 
     React.useEffect(() => {
         const isEditMode = model.isEditMode;
         const isViewAsIcon = model.isViewAsIcon;
+        const isNew = model.isNew;
 
-        setCommentState({ isEditMode, isViewAsIcon });
-    }, [model.isEditMode, model.isViewAsIcon]);
+        setCommentState({ isEditMode, isViewAsIcon, isNew });
+    }, [model.isEditMode, model.isViewAsIcon, model.isNew]);
 
     return commentState?.isEditMode ? 
     (<div className={css['comment-container']} 
@@ -108,8 +125,11 @@ export const Comment : React.FC<Props> = ({ model, actionHandler }) => {
             <img 
                 src={MinSizeIcon} 
                 className={css['min-size-icon']}
-                onClick={_ => updateState(false, true)}
+                onClick={_ => updateState(false, true, false)}
                 alt="min size"/>
+            <div className={css.createdAt}>
+                <span>{utcToLocalString(model.comment?.createdAt)}</span>
+            </div>
         </div>
         <div className={css['comment-content']}>
             <span>{commentText}</span>
